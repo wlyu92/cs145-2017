@@ -16,7 +16,8 @@ started	datetime NOT NULL,
 ends	datetime NOT NULL,
 description text NOT NULL,
 PRIMARY KEY (item_id),
-FOREIGN KEY (seller_id) REFERENCES AuctionUser(user_id)
+FOREIGN KEY (seller_id) REFERENCES AuctionUser(user_id),
+CHECK (started < ends)
 );
 
 CREATE TABLE Bids(
