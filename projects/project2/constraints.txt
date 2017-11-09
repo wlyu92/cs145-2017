@@ -1,0 +1,63 @@
+1. No two users can share the same User ID.
+Create a PRIMARY KEY constraint on the 'user_id' attribute of the 'AuctionUser' table.
+This constraint is added to 'create.sql'.
+
+2. All sellers and bidders must already exist as users.
+This can be implemented in the Items and Bids table by setting seller_id and bidder_id as FOREIGN KEY that references to user_id in AuctionUser table.
+Add foreign key constraint in 'create.sql'.
+
+3. No two items can share the same Item ID.
+This can be implemented in the Items table by setting item_id as PRIMARY KEY.
+Add primary key constraint in 'create.sql'.
+
+4. Every bid must correspond to an actual item.
+This can be implemented in the Bids table by setting item_id as a FOREIGN KEY that references to item_id in the Items table.
+Add foreign key constraint in 'create.sql'.
+
+5. The items for a given category must all exist.
+This can be implemented in the Category table by setting item_id as a FOREIGN KEY that references to item_id in the Items table.
+Add foreign key constraint in 'create.sql'.
+
+6. An item cannot belong to a particular category more than once.
+This can be implemented in the Category table by setting item_id and category_name as a composite PRIMARY KEY.
+Add foreign key constraint in 'create.sql'.
+
+7. The end time for an auction must always be after its start time.
+This can be implemented in the Items table by checking the the end_time is always larger than the start_time for the same item_id.
+Add check constraint in 'create.sql'.
+
+8. The Current_Price of an item must always match the Amount of the most recent bid for that item.
+Add a trigger to update the 'currently' attribute on 'Items' table to the newly inserted 'amount' after each insert on Bids table.
+This trigger is added as 'trigger1_add.sql' and 'trigger1_drop.sql'.
+
+9. A user may not bid on an item he or she is also selling.
+Add a trigger to forbid (before) the insersion of new bids on table 'Bids' if 'bidder_id' attribute is already listed as a 'seller_id' in the 'Items' table for the same 'item_id'.
+This trigger is added as 'trigger2_add.sql' and 'trigger2_drop.sql'.
+
+10. No auction may have two bids at the exact same time.
+Create a UNIQUE constraint on 'item_id' and 'time' attributes on table 'Bids'.
+This constraint is added to 'create.sql'.
+
+11. No auction may have a bid before its start time or after its end time.
+Add a trigger to forbid (before) the insertion of new bid on table 'Bids' if 'time' in table 'Bids' is before 'started' or after 'ends' for the same item_id in table 'Items'.
+This trigger is added as 'trigger3_add.sql' and 'trigger3_drop.sql'.
+
+12. No user can make a bid of the same amount to the same item more than once.
+Add a UNIQUE constraint on 'bidder_id', 'amount' and 'item_id' attributes of table 'Bids'.
+This constraint is added to 'create.sql'.
+
+13. In every auction, the Numer_of_Bids attribute corresponds to the actual number of bids for that particular item.
+Add a trigger to update the 'number_of_bids' attribute in table 'Items' for a 'item_id' after each new insertion into table 'Bids' for that same 'item_id'.
+This trigger is added as 'trigger4_add.sql' and 'trigger4_drop.sql'.
+
+14. Any new bid for a particular item must have a higher amount than any of the previous bids for that particular item.
+Add a trigger to forbid (before) an insertion of each new bids to table 'Bids' if the 'amount' attribute is lower than or equal to the maximum previous 'amount' for the same 'item_id'.
+This trigger is added as 'trigger5_add.sql' and 'trigger5_drop.sql'.
+
+15. All new bids must be placed at the time which matches the current time of your AuctionBase system. 
+Add a trigger to update 'time' attribute after each new insertion to table 'Bids' to 'time_current' of table 'CurrentTime'.
+This trigger is added as 'trigger6_add.sql' and 'trigger6_drop.sql'.
+
+16. The current time of your AuctionBase system can only advance forward in time, not backward in time.
+Add a trigger to forbid (before) an attempt to change the 'time_current' attribute on table 'CurrentTime' if the new time is earlier than 'time_current'.
+This trigger is added as 'trigger7_add.sql' and 'trigger7_drop.sql'.
