@@ -51,7 +51,7 @@ Add a trigger to update the 'number_of_bids' attribute in table 'Items' for a 'i
 This trigger is added as 'trigger4_add.sql' and 'trigger4_drop.sql'.
 
 14. Any new bid for a particular item must have a higher amount than any of the previous bids for that particular item.
-Add a trigger to forbid (before) an insertion of each new bids to table 'Bids' if the 'amount' attribute is lower than or equal to the maximum previous 'amount' for the same 'item_id'.
+Add a trigger to forbid (before) an insertion of each new bids to table 'Bids' if the 'amount' attribute is lower than or equal to the maximum value of all previous 'amount' for the same 'item_id'.
 This trigger is added as 'trigger5_add.sql' and 'trigger5_drop.sql'.
 
 15. All new bids must be placed at the time which matches the current time of your AuctionBase system. 

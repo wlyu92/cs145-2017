@@ -6,11 +6,11 @@ SELECT bidder_id
 FROM Bids
 WHERE bidder_id NOT IN (SELECT user_id FROM AuctionUsers);
 
-SELECT seller_id, bidder_id
-FROM Items
-LEFT OUTER JOIN Bids ON item_id
-WHERE (seller_id NOT IN (SELECT user_id FROM AuctionUsers)) OR 
-	(seller_id NOT IN (SELECT user_id FROM AuctionUsers));
+--SELECT seller_id, bidder_id
+--FROM Items
+--LEFT OUTER JOIN Bids ON item_id
+--WHERE (seller_id NOT IN (SELECT user_id FROM AuctionUsers)) OR 
+--	(seller_id NOT IN (SELECT user_id FROM AuctionUsers));
 --4. Every bid must correspond to an actual item
 SELECT item_id
 FROM Bids
