@@ -1,0 +1,68 @@
+{% extends "app_base.html" %}
+{% block content %}
+
+<h4> {{auction_status}} </h4>
+
+<h4> Item information:</h4>
+<ul>
+{% if search_result %}
+{% for result in search_result %}
+	{% for key in result %}
+		<div>
+			<li>
+				<span>{{ key|e }}:</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span>{{ result[key]|e }}</span>
+				<div>-----</div>
+			</li>
+		</div>
+  	{% endfor %}
+{% endfor %}
+{% else %}
+<div>No result.</div>
+{% endif %}
+</ul>
+
+<h4> Item categories: </h4>
+<ul>
+{% if auction_categories %}
+	{% for category in auction_categories %}
+		{% for key in category %}
+		<div>
+			<li>
+				<span>{{category[key]|e}}</span>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+			</li>
+		</div>
+		{% endfor %}
+	{% endfor %}
+{% else %}
+	<div>No category.</div>
+{% endif %}
+</ul>
+
+
+
+<h4> Bidding information: </h4>
+<ul>
+	{% if search_bids %}
+		{% for b in search_bids %}
+			{% for key in b %}
+				<div>
+					<li>
+						<span>{{key|e}}:</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>{{b[key]|e}}</span>
+					</li>
+
+				</div>
+			{% endfor %}
+			<div>-----</div>
+		{% endfor %}
+	{% else %}
+		<div>No bid.</div>
+	{% endif %}
+</ul>
+{# also make sure to include this very last line as well #}
+{% endblock %}
+
